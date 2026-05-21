@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: 24 32 56;
+  --background: 240 248 255;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  color: rgb(var(--foreground));
+  background: rgb(var(--background));
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Botões com tamanho mínimo gigante e tátil */
+@layer components {
+  .btn-grande {
+    @apply inline-flex items-center justify-center gap-3
+           min-h-[64px] px-6 py-3
+           rounded-3xl font-bold text-xl
+           shadow-chunky transition-all duration-150
+           active:translate-y-1 active:shadow-none
+           focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ceu-300/60;
+  }
+
+  .cartao {
+    @apply rounded-3xl bg-white shadow-chunky p-6
+           border-4 border-white;
+  }
+
+  .opcao {
+    @apply rounded-3xl bg-white border-4 border-white
+           shadow-chunky transition-all duration-150
+           active:translate-y-1 active:shadow-none
+           focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ceu-300/60;
+  }
+
+  .opcao-correta {
+    @apply !border-menta-400 !bg-menta-100 ring-4 ring-menta-300 animate-pop;
+  }
+
+  .opcao-errada {
+    @apply !border-coral-400 !bg-coral-100 animate-wiggle;
+  }
+}
+
+/* Respeita preferências de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
