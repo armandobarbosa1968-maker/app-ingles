@@ -1,3 +1,4 @@
+const H=+(process.env.H||1350),PFX=process.env.PFX||'slide';
 const slides = [
  {k:'cover', t:'A tua cabeça pode pesar <b>6 vezes mais</b>', s:'…só pela forma como olhas para o telemóvel 📱', n:'Desliza →'},
  {k:'text', h:'Sabias que…', t:'Uma cabeça adulta pesa entre <b>4,5 e 5,5 kg</b>.', s:'Com o pescoço direito, a coluna aguenta bem esse peso.'},
@@ -9,8 +10,8 @@ const slides = [
  {k:'end', t:'Levanta a cabeça! 🙌', s:'Guarda este post e partilha com quem passa o dia no telemóvel.<br><br>Marque a sua consulta: <b>210 537 073</b>', n:'Em caso de dor persistente, consulta um médico.'},
 ];
 const angles=[[0,5],[15,12],[30,18],[45,22],[60,27]];
-const css=`*{margin:0;box-sizing:border-box}body{width:1080px;height:1350px;font-family:'Poppins',sans-serif;background:#0f2a3d;color:#fff;overflow:hidden}
-.slide{width:1080px;height:1350px;padding:110px 90px;display:flex;flex-direction:column;justify-content:center;position:relative;background:linear-gradient(160deg,#0f2a3d 0%,#16425b 100%)}
+const css=`*{margin:0;box-sizing:border-box}body{width:1080px;height:${H}px;font-family:'Poppins',sans-serif;background:#0f2a3d;color:#fff;overflow:hidden}
+.slide{width:1080px;height:${H}px;padding:110px 90px;display:flex;flex-direction:column;justify-content:center;position:relative;background:linear-gradient(160deg,#0f2a3d 0%,#16425b 100%)}
 .slide.alt{background:linear-gradient(160deg,#fff7ec,#ffe6c7);color:#0f2a3d}
 h1{font-size:104px;line-height:1.05;font-weight:800}h2{font-size:64px;line-height:1.1;font-weight:800;margin-bottom:50px;color:#ff9f43}.alt h2{color:#e2711d}
 b{color:#ff9f43}.alt b{color:#e2711d}p.t{font-size:62px;font-weight:700;line-height:1.2}p.s{font-size:40px;margin-top:40px;opacity:.85;line-height:1.35}
@@ -33,6 +34,6 @@ const html=(sl,i)=>{let b='';const ft=`<div class="ft"><div class="logo">Pain<sp
  const alt=(i%2==1)?' alt':'';
  return `<!doctype html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet"><style>${css}</style></head><body><div class="slide${alt}">${pg}${b}${ft}</div></body></html>`;};
 const {chromium}=require('playwright');
-(async()=>{const br=await chromium.launch();const p=await br.newPage({viewport:{width:1080,height:1350}});
-for(let i=0;i<slides.length;i++){await p.setContent(html(slides[i],i),{waitUntil:'networkidle'}).catch(()=>{});await p.waitForTimeout(300);await p.screenshot({path:`slide-${i+1}.png`});}
+(async()=>{const br=await chromium.launch();const p=await br.newPage({viewport:{width:1080,height:H}});
+for(let i=0;i<slides.length;i++){await p.setContent(html(slides[i],i),{waitUntil:'networkidle'}).catch(()=>{});await p.waitForTimeout(300);await p.screenshot({path:`${PFX}-${i+1}.png`});}
 await br.close();})();
